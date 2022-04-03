@@ -1,0 +1,20 @@
+*{
+    background-color: aliceblue;
+}
+.initial {
+    position: absolute;
+    left: 47%;
+    top: 45%;
+    color: white;
+    background-color: purple;
+    font-size: 20px;
+    
+}
+.title {
+    display: flex;
+    justify-content: center;
+    
+}
+/*#hidden {
+    display: none;
+}*/

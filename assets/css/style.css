@@ -1,14 +1,17 @@
 *{
     background-color: aliceblue;
 }
-.initial {
+.start {
     position: absolute;
     left: 47%;
     top: 45%;
     color: white;
     background-color: purple;
     font-size: 20px;
-    
+}
+.initial {
+    display: flex;
+    justify-content: flex-end;
 }
 .title {
     display: flex;

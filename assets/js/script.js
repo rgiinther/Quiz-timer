@@ -67,7 +67,7 @@ var timer;
 //start countdown timer once 'start' button is pressed
 function start() {
 
-    timeLeft = 85;
+    timeLeft = 100;
     document.getElementById("timeLeft").innerHTML = timeLeft;
 
     timer = setInterval(function() {
@@ -78,7 +78,7 @@ function start() {
             clearInterval(timer);
             endGame(); 
         }
-    }, 1000); //set pacing of timer to be 1000 millisecond per interval change
+    }, 5000); //set pacing of timer to be 1000 millisecond per interval change
 
     next();
 }
@@ -98,5 +98,64 @@ function endGame() {
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
+//store the scores on local storage
+function setScore() {
+    localStorage.setItem("highscore", score);
+    localStorage.setItem("highscoreName",  document.getElementById('name').value);
+    getScore();
+}
+
+function getScore() {
+    //create message body within java for score screen
+    var quizContent = `
+    <h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
+    <h1>` + localStorage.getItem("highscore") + `</h1><br> 
+    
+    <button onclick="clearScore()">Clear score!</button><button onclick="resetGame()">Play Again!</button>`;
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+}
+//clear score name and value in the local storage if the user selects 'clear score'
+function clearScore() {
+    localStorage.setItem("highscore", "");
+    localStorage.setItem("highscoreName", "");
+
+    resetGame();
+}
+
+//reset the game 
+function resetGame() {
+    clearInterval(timer);
+    score = 0;
+    currentQuestion = -1;
+    timeLeft = 0;
+    timer = null;
+
+    document.getElementById("timeLeft").innerHTML = timeLeft;
+
+//create message body within java
+    var quizContent = `
+    <h1>
+        JavaScript Quiz!
+    </h1>
+    <h3>
+        Click to play!   
+    </h3>
+    <button onclick="start()">Start!</button>`;
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+}
+
+//deducts 15 seconds from the timer if user chooses an incorrect answer
+function incorrect() {
+    timeLeft -= 15; 
+    next();
+}
+
+//increases the score by 20 pts if the user chooses the correct answer
+function correct() {
+    score += 20;
+    next(); 
+}
 
 

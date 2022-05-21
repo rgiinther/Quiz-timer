@@ -86,7 +86,6 @@ function start() {
 //stop the timer to end the game
 function endGame() {
     clearInterval(timer);
-
     //create message within java for game over screen
     var quizContent = `
     <h2>Game over!</h2>

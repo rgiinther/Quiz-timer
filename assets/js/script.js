@@ -7,8 +7,8 @@
 
 
 //quiz questions
-var currentQuestionIndex = 0
-var myQuestions= [
+var currentQuestion = 0
+var quizQuestions= [
     {
         question: "What is the name of the artist who painted Mona Lisa?", 
         choices: ['Van Gogh', 'Picasso', 'Leonardo Davinci'],
@@ -91,7 +91,7 @@ function endGame() {
     var quizContent = `
     <h2>Game over!</h2>
     <h3>You got ` + score +  ` /100!</h3>
-    <h3>That means you got ` + score / 20 +  ` out of 5 questions correct!</h3>
+    <h3>That means you got ` + score / 20 +  ` out of 9 questions correct!</h3>
     <input type="text" id="name" placeholder="Initials"> 
     <button onclick="setScore()">Set score!</button>`;
 
@@ -158,4 +158,28 @@ function correct() {
     next(); 
 }
 
+//loops through the questions 
+function next() {
+    currentQuestion++;
 
+    if (currentQuestion > quizQuestions.length - 1) {
+        endGame();
+        return;
+    }
+
+    var quizContent = "<h2>" + quizQuestions[currentQuestion].question + "</h2>"
+
+    for (var buttonLoop = 0; buttonLoop < quizQuestions[currentQuestion].choices.length; buttonLoop++) {
+        var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
+        buttonCode = buttonCode.replace("[CHOICE]", quizQuestions[currentQuestion].choices[buttonLoop]);
+        if (quizQuestions[currentQuestion].choices[buttonLoop] === quizQuestions[currentQuestion].answer) {
+            buttonCode = buttonCode.replace("[ANS]", "correct()");
+        } else {
+            buttonCode = buttonCode.replace("[ANS]", "incorrect()");
+        }
+        quizContent += buttonCode
+    }
+
+
+    document.getElementById("quizBody").innerHTML = quizContent;
+}
